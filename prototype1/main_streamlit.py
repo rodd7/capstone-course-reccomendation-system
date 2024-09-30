@@ -7,7 +7,7 @@ import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 def load_data_and_embeddings():
-    dataFile = pd.read_excel('curriculum_data_2020_raw\CASS-MASTER.xlsx', sheet_name='Subject')
+    dataFile = pd.read_excel('..\curriculum_data_2020_raw\CASS-MASTER.xlsx', sheet_name='Subject')
     courseID = dataFile['Study Package Cd'].dropna().values
     courseTitle = dataFile['Full Title'].dropna().values
     courseCP = dataFile['Credit Point Value'].dropna().values
