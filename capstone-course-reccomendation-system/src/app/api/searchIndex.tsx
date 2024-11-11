@@ -2,7 +2,9 @@
 
 import { MongoClient } from "mongodb";
 import { generateEmbedding } from "@/app/api/createEmbedding";
-require("dotenv").config();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const uri = `mongodb+srv://rodd7170:${process.env.MONGODB_PASSWORD}@cluster0.d9bow.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const client = new MongoClient(uri);
@@ -21,8 +23,8 @@ export async function searchIndex(query: string): Promise<string | null> {
 					$vectorSearch: {
 						queryVector: queryVector,
 						path: "subjectEmbedding",
-						numCandidates: 500,
-						limit: 8,
+						numCandidates: 3000,
+						limit: 20,
 						index: "EmbeddingSemanticSearch",
 					},
 				},
@@ -30,6 +32,21 @@ export async function searchIndex(query: string): Promise<string | null> {
 					$project: {
 						subjectID: 1,
 						subjectTitle: 1,
+						subjectLink: 1,
+						subjectAvailability: 1,
+						subjectCreditPoints: 1,
+						subjectOrganisationalName: 1,
+						subjectLevel: 1,
+						subjectResultType: 1,
+						subjectDescription: 1,
+						subjectSLO: 1,
+						subjectCILO: 1,
+						subjectStrategy: 1,
+						subjectContent: 1,
+						subjectAssessment: 1,
+						descriptiveTags: 1,
+						contextTags: 1,
+
 						descriptionSnippet: { $substr: ["$subjectDescription", 0, 150] },
 						score: { $meta: "vectorSearchScore" },
 					},
@@ -41,6 +58,20 @@ export async function searchIndex(query: string): Promise<string | null> {
 			"Subject ID": doc.subjectID,
 			"Subject Title": doc.subjectTitle,
 			"Vector Search Score": doc.score,
+			subjectLink: doc.subjectLink,
+			subjectAvailability: doc.subjectAvailability,
+			subjectCreditPoints: doc.subjectCreditPoints,
+			subjectOrganisationalName: doc.subjectOrganisationalName,
+			subjectLevel: doc.subjectLevel,
+			subjectResultType: doc.subjectResultType,
+			subjectDescription: doc.subjectDescription,
+			subjectSLO: doc.subjectSLO,
+			subjectCILO: doc.subjectCILO,
+			subjectStrategy: doc.subjectStrategy,
+			subjectContent: doc.subjectContent,
+			subjectAssessment: doc.subjectAssessment,
+			descriptiveTags: doc.descriptiveTags,
+			contextTags: doc.contextTags,
 			Snippet: doc.descriptionSnippet,
 		}));
 

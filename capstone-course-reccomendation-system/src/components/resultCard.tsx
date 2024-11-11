@@ -35,6 +35,10 @@ const Tags = ({ subjectTags }: { subjectTags: string[] }) => {
 						? "fff178"
 						: tag === "Transdisciplinary"
 						? "cf7a56"
+						: tag === "Postgraduate"
+						? "000000"
+						: tag === "Undergraduate"
+						? "000000"
 						: "ffffff" // Default to white
 				}`;
 				const textColor = backgroundColor !== "#ffffff" ? "white" : "black";
@@ -69,7 +73,7 @@ export function ResultCard({
 	return (
 		<div className="w-full h-[200px] rounded-sm bg-navbar p-2 flex flex-col">
 			<span className="flex justify-between w-full">
-				<b className="text-white text-lg ml-1 mt-1 max-w-[85%] leading-4">
+				<b className="text-white text-base ml-1 mt-1 leading-4 overflow-hidden text-ellipsis max-h-[48px] max-w-[85%]">
 					{subjectTitle}
 				</b>
 				<span>
@@ -78,18 +82,20 @@ export function ResultCard({
 					</b>
 				</span>
 			</span>
-			<i className="text-white ml-1 text-sm">{subjectOrganisationalName}</i>
+			<i className="text-white ml-1 text-xs leading overflow-hidden text-ellipsis truncate max-h-[18px] pb-4">
+				{subjectOrganisationalName}
+			</i>
 			<p className="text-gray-300 ml-1 text-xs">{subjectExcerpt}</p>
 
-			<span>
+			<span className="pl-1">
 				<Tags subjectTags={subjectTags} />
 			</span>
 
 			<span className="flex justify-between w-full mt-auto">
-				<p className="text-gray-300 ml-1 text-xs mt-2">
+				<p className="text-gray-300 ml-1 text-xs mt-2.5">
 					{subjectConfidenceScore}% match
 				</p>
-				<i className="text-white text-lg mr-1 -pb-1">{subjectID}</i>
+				<i className="text-white text-base mr-1 mt-1">{subjectID}</i>
 			</span>
 		</div>
 	);
